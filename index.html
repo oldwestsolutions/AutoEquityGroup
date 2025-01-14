@@ -372,28 +372,43 @@
     </nav>
 
 <header class="header" id="home" style="
-    background-image: url('mainaeg.jpeg'); 
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    color: white; 
-    text-align: center; 
-    padding: 50px 20px; 
+    background-color: #f4f4f4; 
     height: 40vh; 
     display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px;
 ">
-    <a href="#contact" class="button" style="
-        background-color: #ff5722; 
-        color: white; 
-        padding: 10px 20px; 
-        text-decoration: none; 
-        border-radius: 5px; 
-        font-size: 16px;
-    ">Schedule Consultation</a>
+    <!-- Image Column -->
+    <div class="header-image" style="
+        flex: 1; 
+        background-image: url('mainaeg.jpeg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        height: 100%;
+    "></div>
+
+    <!-- Content Column -->
+    <div class="header-content" style="
+        flex: 1; 
+        text-align: center; 
+        padding: 20px;
+    ">
+        <h1 style="margin-bottom: 10px;">Excellence in Automotive Care</h1>
+        <p style="margin-bottom: 20px;">Premium parts and expert service for luxury and performance vehicles</p>
+        <a href="#contact" class="button" style="
+            background-color: #ff5722; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-size: 16px;
+        ">Schedule Consultation</a>
+    </div>
 </header>
+
 
 
 
