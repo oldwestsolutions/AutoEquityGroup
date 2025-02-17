@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - AutoEquityGroup</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Include same styles as index.html -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <!-- Same Navigation as index.html -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <!-- ... copy navigation from index.html ... -->
+    </nav>
+
+    <div class="flex-1 overflow-y-auto bg-gray-50">
+        <div class="container mx-auto px-6 py-12">
+            <header class="text-center mb-16">
+                <h1 class="text-4xl font-bold mb-4">Luxury Vehicle Community</h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Connect with fellow enthusiasts and share your passion</p>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Events Section -->
+                <div class="bg-white rounded-xl p-8 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-6">Upcoming Events</h2>
+                    <div class="space-y-6">
+                        <div class="border-b pb-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-lg">Italian Motors Exhibition</h3>
+                                <span class="text-red-800 text-sm font-medium">June 15, 2024</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">Annual gathering of Italian luxury vehicles featuring rare and classic models.</p>
+                            <button class="text-red-800 font-medium hover:text-red-900">Learn More →</button>
+                        </div>
+                        <!-- Add more events... -->
+                    </div>
+                </div>
+
+                <!-- Forums Section -->
+                <div class="bg-white rounded-xl p-8 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-6">Popular Discussions</h2>
+                    <div class="space-y-6">
+                        <div class="border-b pb-4">
+                            <h3 class="font-bold text-lg mb-2">Maintenance Tips & Tricks</h3>
+                            <p class="text-gray-600 mb-3">Share and discover maintenance tips from experienced owners.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>324 posts</span>
+                                <span class="mx-2">•</span>
+                                <span>Last active 2h ago</span>
+                            </div>
+                        </div>
+                        <!-- Add more forum topics... -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Same Footer as index.html -->
+    <footer class="bg-gray-900 text-white pt-6 pb-8 footer-container">
+        <!-- ... copy footer from index.html ... -->
+    </footer>
+</body>
+</html> 

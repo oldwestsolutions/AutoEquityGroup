@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - AutoEquityGroup</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Include same styles as index.html -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Same Navigation as index.html -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <!-- ... copy navigation from index.html ... -->
+    </nav>
+
+    <div class="flex-1 overflow-y-auto bg-gray-50">
+        <div class="container mx-auto px-6 py-12">
+            <header class="text-center mb-16">
+                <h1 class="text-4xl font-bold mb-4">Premium Parts & Accessories</h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover authentic parts and luxury accessories for your vehicle</p>
+            </header>
+
+            <!-- Filter Bar -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-8 flex flex-wrap gap-4 items-center">
+                <select class="border rounded-lg px-4 py-2 text-gray-700">
+                    <option>All Categories</option>
+                    <option>Performance Parts</option>
+                    <option>Interior Accessories</option>
+                    <option>Exterior Accessories</option>
+                </select>
+                <select class="border rounded-lg px-4 py-2 text-gray-700">
+                    <option>All Brands</option>
+                    <option>Ferrari</option>
+                    <option>Maserati</option>
+                    <option>Alfa Romeo</option>
+                </select>
+                <input 
+                    type="text" 
+                    placeholder="Search products..." 
+                    class="border rounded-lg px-4 py-2 flex-1"
+                />
+            </div>
+
+            <div class="product-grid">
+                <!-- Product Card -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="/api/placeholder/300/200" alt="Product" class="w-full object-cover"/>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2">Carbon Fiber Steering Wheel</h3>
+                        <p class="text-gray-600 mb-4">Premium carbon fiber steering wheel with leather grip</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">€2,499</span>
+                            <button class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-900 transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more product cards... -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Same Footer as index.html -->
+    <footer class="bg-gray-900 text-white pt-6 pb-8 footer-container">
+        <!-- ... copy footer from index.html ... -->
+    </footer>
+</body>
+</html> 

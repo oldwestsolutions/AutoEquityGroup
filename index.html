@@ -3,237 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Equity Group - Enterprise Auto Finance Solutions</title>
+    <title>AutoEquityGroup - Premium Vehicle Maintenance Insurance</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            min-height: 0;
+            height: auto;
+        }
+        
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.03) 0%, rgba(185, 28, 28, 0.05) 100%);
+        }
+
         :root {
-            --army-green: #4B5320;
-            --deep-red: #8B0000;
+            --section-spacing: 6rem;
+            --component-spacing: 2rem;
         }
-        .bg-army-green {
-            background-color: var(--army-green);
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
         }
-        .bg-deep-red {
-            background-color: var(--deep-red);
+
+        .card-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        .text-army-green {
-            color: var(--army-green);
+
+        .btn-primary {
+            @apply bg-red-800 text-white px-8 py-4 rounded-lg hover:bg-red-900 transition-all duration-300 inline-block text-lg font-semibold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .text-deep-red {
-            color: var(--deep-red);
+
+        .btn-secondary {
+            @apply border-2 border-red-800 text-red-800 px-8 py-4 rounded-lg hover:bg-red-50 transition-all duration-300 inline-block text-lg font-semibold;
         }
-        .border-army-green {
-            border-color: var(--army-green);
+
+        .vin-feedback {
+            position: absolute;
+            left: 6px;
+            bottom: -20px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
         }
-        .border-deep-red {
-            border-color: var(--deep-red);
+        
+        .vin-input:valid + .search-button {
+            background-color: rgb(153, 27, 27);
         }
-        .hover\:bg-army-green:hover {
-            background-color: var(--army-green);
+        
+        .vin-input.verified {
+            border-color: #10B981;
         }
-        .hover\:bg-deep-red:hover {
-            background-color: var(--deep-red);
+        
+        .vin-input.not-found {
+            border-color: #EF4444;
+        }
+
+        /* Adjust hero container height */
+        .hero-container {
+            min-height: 60vh;
+            height: 100%;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* Adjust footer height */
+        .footer-container {
+            flex-shrink: 0;
+            font-size: 0.875rem; /* Slightly smaller text */
+        }
+        
+        .footer-grid {
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
         }
     </style>
+    <script>
+        function verifyVIN(vin) {
+            // Simulated database of supported VINs (replace with actual API call)
+            const supportedVINs = {
+                'ZFF91HAS0P0280189': { make: 'Ferrari', model: 'SF90', year: '2023' },
+                'ZALCA88A7LM123456': { make: 'Alfa Romeo', model: 'Giulia', year: '2022' },
+                'ZAM45VLA0H0123456': { make: 'Maserati', model: 'Ghibli', year: '2021' }
+            };
+
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const result = supportedVINs[vin];
+                    resolve(result);
+                }, 500); // Simulate API delay
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const vinInput = document.getElementById('vin-input');
+            const searchBtn = document.getElementById('search-btn');
+            const feedbackEl = document.getElementById('vin-feedback');
+            
+            let timeoutId;
+
+            vinInput.addEventListener('input', async function(e) {
+                const vin = e.target.value.toUpperCase();
+                vinInput.value = vin; // Keep input uppercase
+                
+                clearTimeout(timeoutId);
+                
+                if (vin.length === 17) { // Valid VIN length
+                    searchBtn.disabled = true;
+                    searchBtn.innerHTML = '<svg class="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+                    
+                    timeoutId = setTimeout(async () => {
+                        const vehicle = await verifyVIN(vin);
+                        
+                        if (vehicle) {
+                            vinInput.classList.add('verified');
+                            vinInput.classList.remove('not-found');
+                            feedbackEl.textContent = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
+                            feedbackEl.classList.remove('text-red-500');
+                            feedbackEl.classList.add('text-green-600');
+                        } else {
+                            vinInput.classList.add('not-found');
+                            vinInput.classList.remove('verified');
+                            feedbackEl.textContent = 'Vehicle not found in our database';
+                            feedbackEl.classList.remove('text-green-600');
+                            feedbackEl.classList.add('text-red-500');
+                        }
+                        
+                        searchBtn.disabled = false;
+                        searchBtn.textContent = 'Search';
+                    }, 500);
+                } else {
+                    vinInput.classList.remove('verified', 'not-found');
+                    feedbackEl.textContent = '';
+                    searchBtn.disabled = false;
+                    searchBtn.textContent = 'Search';
+                }
+            });
+        });
+    </script>
 </head>
-<body class="font-serif">
+<body>
+    <!-- Announcement Bar -->
+    <div class="bg-red-700 text-white py-2">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <span class="font-medium">Special Offer: 3 months free coverage for new customers. </span>
+            <a href="#" class="underline ml-2">Learn More →</a>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold text-army-green tracking-wider">AUTO EQUITY GROUP</span>
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold font-serif text-red-800 tracking-tight flex items-center">
+                    <svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+                    </svg>
+                    AutoEquityGroup
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-6">
-                        <a href="#" class="text-gray-800 hover:text-deep-red px-3 py-2 text-sm uppercase tracking-wider">Home</a>
-                        <a href="#features" class="text-gray-800 hover:text-deep-red px-3 py-2 text-sm uppercase tracking-wider">Solutions</a>
-                        <a href="#about" class="text-gray-800 hover:text-deep-red px-3 py-2 text-sm uppercase tracking-wider">Enterprise</a>
-                        <a href="#contact" class="text-gray-800 hover:text-deep-red px-3 py-2 text-sm uppercase tracking-wider">Contact</a>
-                        <a href="#" class="bg-deep-red text-white px-6 py-3 rounded text-sm uppercase tracking-wider hover:bg-army-green transition duration-300">Request Demo</a>
-                    </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-red-800 transition-colors font-medium">Network</a>
+                    <a href="#" class="text-gray-700 hover:text-red-800 transition-colors font-medium">Community</a>
+                    <a href="#" class="text-gray-700 hover:text-red-800 transition-colors font-medium">Marketplace</a>
+                    <a href="#" class="text-gray-700 hover:text-red-800 transition-colors font-medium">About</a>
+                    <a href="#" class="bg-red-800 text-white px-6 py-2 rounded-lg hover:bg-red-900 transition-colors font-medium">Client Login</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 bg-army-green">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <!-- Text Column -->
-                <div class="text-center lg:text-left">
-                    <h1 class="text-4xl tracking-tight font-bold text-white sm:text-5xl md:text-6xl leading-tight">
-                        Enterprise Auto Finance<br>
-                        <span class="text-gray-300">Powered by XRP Technology</span>
-                    </h1>
-                    <p class="mt-6 text-xl text-gray-300 leading-relaxed">
-                        Revolutionizing automotive financial services with blockchain innovation and real-time settlement infrastructure.
-                    </p>
-                    <div class="mt-10 flex justify-center lg:justify-start space-x-6">
-                        <a href="#" class="bg-deep-red text-white px-8 py-4 rounded text-sm uppercase tracking-wider hover:bg-army-green transition duration-300">
-                            Schedule Consultation
-                        </a>
-                        <a href="#" class="border-2 border-white text-white px-8 py-4 rounded text-sm uppercase tracking-wider hover:bg-white hover:text-army-green transition duration-300">
-                            View Solutions
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Image Column -->
-                <div class="flex justify-center">
-                    <img src="mainaeg.jpeg" alt="Enterprise Auto Finance" class="w-full max-w-md lg:max-w-lg rounded-lg shadow-lg">
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl uppercase tracking-wider">
-                    Enterprise Solutions
-                </h2>
-                <div class="w-24 h-1 bg-deep-red mx-auto mt-6"></div>
-            </div>
-            <div class="mt-16">
-                <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-                    <div class="p-8 border-2 border-gray-200 rounded-lg hover:border-deep-red transition duration-300">
-                        <div class="w-16 h-16 bg-army-green rounded-lg flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-chart-line text-2xl"></i>
+    <div class="gradient-bg relative">
+        <div class="container mx-auto px-6 hero-container flex items-center relative">
+            <div class="grid md:grid-cols-2 gap-16 items-center py-24">
+                <div class="space-y-8">
+                    <div class="text-sm font-semibold text-red-800 tracking-wider">TRUSTED BY LEADING ITALIAN AUTOMAKERS</div>
+                    <h1 class="text-5xl font-bold leading-tight">Protect Your Investment with Premium Coverage</h1>
+                    <p class="text-xl text-gray-600 leading-relaxed">Comprehensive vehicle maintenance insurance backed by 30+ years of Italian automotive excellence.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <div class="flex-1 relative">
+                            <input 
+                                id="vin-input"
+                                type="text" 
+                                placeholder="Enter your VIN number" 
+                                class="vin-input w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-red-800 focus:outline-none text-lg transition-colors"
+                                pattern="[A-HJ-NPR-Z0-9]{17}"
+                                title="Please enter a valid 17-character VIN"
+                                maxlength="17"
+                            />
+                            <button 
+                                id="search-btn"
+                                class="search-button absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-800 text-white px-6 py-2 rounded-lg hover:bg-red-900 transition-colors font-medium"
+                            >
+                                Search
+                            </button>
+                            <span id="vin-feedback" class="vin-feedback"></span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wider">Real-Time Settlement</h3>
-                        <p class="text-gray-600 leading-relaxed">Advanced XRP integration enabling instant cross-border transactions and automated settlement processes for automotive financing.</p>
                     </div>
-                    <div class="p-8 border-2 border-gray-200 rounded-lg hover:border-deep-red transition duration-300">
-                        <div class="w-16 h-16 bg-army-green rounded-lg flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-shield-alt text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wider">Enterprise Security</h3>
-                        <p class="text-gray-600 leading-relaxed">Military-grade encryption and blockchain security protocols ensuring complete protection of sensitive financial data and transactions.</p>
-                    </div>
-                    <div class="p-8 border-2 border-gray-200 rounded-lg hover:border-deep-red transition duration-300">
-                        <div class="w-16 h-16 bg-army-green rounded-lg flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-analytics text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wider">Advanced Analytics</h3>
-                        <p class="text-gray-600 leading-relaxed">Comprehensive business intelligence platform providing real-time insights and predictive analytics for strategic decision-making.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center">
-                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl uppercase tracking-wider">
-                    Enterprise Advantages
-                </h2>
-                <div class="w-24 h-1 bg-deep-red mx-auto mt-6"></div>
-            </div>
-            <div class="mt-16">
-                <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 bg-army-green rounded flex items-center justify-center text-white">
-                                <i class="fas fa-globe text-xl"></i>
+                    <p class="text-sm text-gray-500">Enter your Vehicle Identification Number (VIN) to check coverage options</p>
+                    <div class="grid sm:grid-cols-2 gap-6 pt-8">
+                        <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="/api/placeholder/48/48" alt="Trustpilot" class="mr-4" />
+                            <div>
+                                <div class="font-semibold">4.9/5 on Trustpilot</div>
+                                <div class="text-sm text-gray-600">Based on 2,400+ reviews</div>
                             </div>
-                            <h3 class="ml-4 text-xl font-bold text-gray-900 uppercase tracking-wider">Global Infrastructure</h3>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">Leverage our worldwide network of financial institutions and blockchain infrastructure to facilitate seamless international auto financing operations.</p>
-                    </div>
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 bg-army-green rounded flex items-center justify-center text-white">
-                                <i class="fas fa-lock text-xl"></i>
+                        <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="/api/placeholder/48/48" alt="ISO Certified" class="mr-4" />
+                            <div>
+                                <div class="font-semibold">ISO 9001:2015</div>
+                                <div class="text-sm text-gray-600">Certified Provider</div>
                             </div>
-                            <h3 class="ml-4 text-xl font-bold text-gray-900 uppercase tracking-wider">Regulatory Compliance</h3>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">Built-in compliance frameworks ensuring adherence to international financial regulations and automotive industry standards.</p>
                     </div>
+                </div>
+                <div class="hidden md:block relative">
+                    <img src="/api/placeholder/600/400" alt="Luxury vehicle" class="rounded-lg shadow-2xl w-full object-cover" style="height: 500px;" />
+                    <div class="absolute inset-0 bg-gradient-to-r from-red-800/10 to-transparent rounded-lg"></div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl uppercase tracking-wider">
-                    Enterprise Consultation
-                </h2>
-                <div class="w-24 h-1 bg-deep-red mx-auto mt-6"></div>
-            </div>
-            <div class="mt-16 max-w-xl mx-auto">
-                <form class="space-y-6">
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 uppercase tracking-wider">Name</label>
-                            <input type="text" name="name" id="name" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-deep-red focus:ring-deep-red">
-                        </div>
-                        <div>
-                            <label for="company" class="block text-sm font-medium text-gray-700 uppercase tracking-wider">Company</label>
-                            <input type="text" name="company" id="company" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-deep-red focus:ring-deep-red">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 uppercase tracking-wider">Email</label>
-                        <input type="email" name="email" id="email" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-deep-red focus:ring-deep-red">
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700 uppercase tracking-wider">Message</label>
-                        <textarea name="message" id="message" rows="4" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-deep-red focus:ring-deep-red"></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" class="w-full bg-deep-red text-white px-6 py-4 rounded text-sm uppercase tracking-wider hover:bg-army-green transition duration-300">Request Information</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer class="bg-gray-900 text-white pt-6 pb-8 footer-container">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-4">
+                <p class="text-lg text-gray-400 font-medium">Trusted by Leading Automotive Brands</p>
+            </div>
+            <div class="grid footer-grid gap-8 mb-6">
                 <div>
-                    <h3 class="text-lg font-bold uppercase tracking-wider mb-6">Auto Equity Group</h3>
-                    <p class="text-gray-400 leading-relaxed">Transforming automotive finance through enterprise blockchain solutions and XRP technology.</p>
+                    <div class="text-xl font-bold font-serif mb-4">AutoEquityGroup</div>
+                    <p class="text-gray-400 mb-4 text-sm">Protecting luxury vehicles with comprehensive coverage since 1990.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
+                        </a>
+                    </div>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold uppercase tracking-wider mb-6">Solutions</h3>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Enterprise Platform</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Settlement Network</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Analytics Suite</a></li>
+                    <h4 class="text-base font-bold mb-3">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Premium Coverage</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Maintenance Plans</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Roadside Assistance</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Claims Process</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold uppercase tracking-wider mb-6">Company</h3>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Leadership</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Careers</a></li>
+                    <h4 class="text-base font-bold mb-3">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Press</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Partners</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold uppercase tracking-wider mb-6">Contact</h3>
-                    <ul class="space-y-4">
-                        <li class="text-gray-400">New York, NY</li>
-                        <li class="text-gray-400">contact@autoequitygroup.com</li>
-                        <li class="text-gray-400">+1 (888) 555-0123</li>
+                    <h4 class="text-base font-bold mb-3">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
                     </ul>
-                    <div class="mt-6 flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter text-xl"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-xs">© 2024 AutoEquityGroup. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-2 md:mt-0">
+                        <a href="#" class="text-gray-400 hover:text-white text-xs">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xs">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xs">Cookie Policy</a>
                     </div>
                 </div>
             </div>
-            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
-                <p>&copy; 2025 Auto Equity Group. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
