@@ -1,53 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRightIcon, WrenchIcon, SparklesIcon, CurrencyDollarIcon, ArrowDownIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRightIcon, WrenchIcon, SparklesIcon, CurrencyDollarIcon, ArrowDownIcon, CheckIcon } from '@heroicons/react/24/outline';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Link from 'next/link';
 
 export default function Home() {
-  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  const newsItems = [
-    {
-      date: "March 15, 2024",
-      title: "New Partnership with Italian Auto Parts Manufacturer",
-      content: "Auto Equity Group announces strategic partnership with leading Italian automotive parts manufacturer."
-    },
-    {
-      date: "March 10, 2024",
-      title: "Innovative Insurance Solutions for Classic Cars",
-      content: "Introducing our new specialized insurance program for classic and vintage vehicles."
-    },
-    {
-      date: "March 5, 2024",
-      title: "Expanding Our Network of Certified Repair Centers",
-      content: "Auto Equity Group expands its network of certified repair centers across the United States."
-    }
-  ];
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-
-    const interval = setInterval(() => {
-      setCurrentNewsIndex((prev) => (prev + 1) % newsItems.length);
-    }, 300000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, newsItems.length]);
-
-  const nextNews = () => {
-    setCurrentNewsIndex((prev) => (prev + 1) % newsItems.length);
-    setIsAutoPlaying(false);
-  };
-
-  const prevNews = () => {
-    setCurrentNewsIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
-    setIsAutoPlaying(false);
-  };
+  const [searchForm, setSearchForm] = useState({
+    condition: 'used',
+    make: '',
+    model: '',
+    zipcode: ''
+  });
 
   return (
     <main className="min-h-screen">
@@ -75,82 +40,83 @@ export default function Home() {
                 Experience the perfect blend of Italian automotive excellence and American ingenuity. 
                 Your trusted partner in automotive insurance and services.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/sign-up" className="btn-primary bg-black text-white hover:bg-gray-800 transition-colors rounded-2xl">
-                  Sign Up <ArrowRightIcon className="w-5 h-5" />
-                </Link>
-                <Link href="/learn-more" className="btn-outline border-2 border-black text-black hover:bg-black hover:text-white transition-colors rounded-2xl">
-                  Learn More
-                </Link>
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    // Handle search - you can add your search logic here
+                    console.log('Search:', searchForm);
+                  }}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Condition</label>
+                      <select
+                        value={searchForm.condition}
+                        onChange={(e) => setSearchForm({...searchForm, condition: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-800 bg-white"
+                      >
+                        <option value="used">Used</option>
+                        <option value="new">New</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Make</label>
+                      <input
+                        type="text"
+                        value={searchForm.make}
+                        onChange={(e) => setSearchForm({...searchForm, make: e.target.value})}
+                        placeholder="e.g., Toyota, Honda"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-800 placeholder-gray-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Model</label>
+                      <input
+                        type="text"
+                        value={searchForm.model}
+                        onChange={(e) => setSearchForm({...searchForm, model: e.target.value})}
+                        placeholder="e.g., Camry, Accord"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-800 placeholder-gray-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Zip Code</label>
+                      <input
+                        type="text"
+                        value={searchForm.zipcode}
+                        onChange={(e) => setSearchForm({...searchForm, zipcode: e.target.value})}
+                        placeholder="e.g., 90210"
+                        maxLength={5}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-800 placeholder-gray-400"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full btn-primary bg-black text-white hover:bg-gray-800 transition-colors rounded-xl py-3"
+                  >
+                    Search Cars <ArrowRightIcon className="w-5 h-5" />
+                  </button>
+                </form>
               </div>
             </motion.div>
 
             <div className="w-full md:w-1/2">
-              <div className="relative h-[400px]">
-                <AnimatePresence mode="wait">
-                  <motion.article
-                    key={currentNewsIndex}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 bg-gray-50 rounded-lg shadow-md overflow-hidden"
-                  >
-                    <div className="aspect-video w-full relative overflow-hidden">
-                      <img
-                        src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80"
-                        alt="Italian car showcase"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-                          <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <span className="text-black text-xs">{newsItems[currentNewsIndex].date}</span>
-                      <h3 className="text-base font-bold text-gray-800 mt-1 mb-2">{newsItems[currentNewsIndex].title}</h3>
-                      <p className="text-sm text-gray-600">{newsItems[currentNewsIndex].content}</p>
-                    </div>
-                  </motion.article>
-                </AnimatePresence>
-
-                {/* Navigation Buttons */}
-                <div className="absolute bottom-6 right-6 flex gap-2">
-                  <button 
-                    onClick={prevNews}
-                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                  >
-                    <ChevronLeftIcon className="w-5 h-5 text-black" />
-                  </button>
-                  <button 
-                    onClick={nextNews}
-                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                  >
-                    <ChevronRightIcon className="w-5 h-5 text-black" />
-                  </button>
-                </div>
-
-                {/* Progress Dots */}
-                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
-                  {newsItems.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setCurrentNewsIndex(index);
-                        setIsAutoPlaying(false);
-                      }}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentNewsIndex ? 'bg-black' : 'bg-gray-300'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative h-[400px] rounded-lg shadow-lg overflow-hidden"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80"
+                  alt="Luxury car showcase"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
+              </motion.div>
             </div>
           </div>
 
