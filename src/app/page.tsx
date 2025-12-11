@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRightIcon, WrenchIcon, SparklesIcon, CurrencyDollarIcon, ArrowDownIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, WrenchIcon, SparklesIcon, CurrencyDollarIcon, ArrowDownIcon, CheckIcon, ArrowPathIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -31,15 +31,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="max-w-md"
             >
-              <span className="text-black tracking-widest text-sm uppercase">Welcome to Auto Equity Group</span>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 leading-tight">
-                <span className="text-[#006400]">Legendary Craftsmanship</span>,<br />
-                <span className="text-black">American Innovation</span>
-              </h1>
-              <p className="text-lg text-gray-600 mb-6 font-light">
-                Experience the perfect blend of Italian automotive excellence and American ingenuity. 
-                Your trusted partner in automotive insurance and services.
-              </p>
+              <span className="text-black tracking-widest text-sm uppercase">Unlock your dream car</span>
               <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
                 <form 
                   onSubmit={(e) => {
@@ -120,135 +112,84 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Additional News Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
-            <motion.article
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white/5 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="aspect-video rounded-lg mb-4 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80"
-                  alt="Italian car showcase"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
-              </div>
-              <span className="text-gray-800 text-sm font-medium">February 28, 2024</span>
-              <h3 className="text-xl font-bold text-gray-900 mt-2 mb-4">New Italian Automotive Parts Distribution Center</h3>
-              <p className="text-gray-700 mb-4">Auto Equity Group opens new distribution center in Detroit, bringing premium Italian automotive parts closer to our customers.</p>
-              <div className="flex items-center gap-2 text-[#006400] text-sm">
-                <span>Read More</span>
-                <ArrowRightIcon className="w-4 h-4" />
-              </div>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white/5 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="aspect-video rounded-lg mb-4 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&q=80"
-                  alt="Luxury vehicle insurance"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
-              </div>
-              <span className="text-gray-800 text-sm font-medium">February 20, 2024</span>
-              <h3 className="text-xl font-bold text-gray-900 mt-2 mb-4">Enhanced Insurance Coverage for Luxury Vehicles</h3>
-              <p className="text-gray-700 mb-4">Introducing expanded coverage options for high-end and luxury vehicles, with specialized protection for Italian imports.</p>
-              <div className="flex items-center gap-2 text-[#006400] text-sm">
-                <span>Read More</span>
-                <ArrowRightIcon className="w-4 h-4" />
-              </div>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white/5 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="aspect-video rounded-lg mb-4 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80"
-                  alt="Italian racing team"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
-              </div>
-              <span className="text-gray-800 text-sm font-medium">February 15, 2024</span>
-              <h3 className="text-xl font-bold text-gray-900 mt-2 mb-4">Partnership with Italian Racing Team</h3>
-              <p className="text-gray-700 mb-4">Auto Equity Group announces sponsorship of Italian racing team, bringing track-proven technology to our customers.</p>
-              <div className="flex items-center gap-2 text-[#006400] text-sm">
-                <span>Read More</span>
-                <ArrowRightIcon className="w-4 h-4" />
-              </div>
-            </motion.article>
-          </div>
-
-          {/* Latest Updates Section */}
+          {/* Services Grid Section - CarGurus Style */}
           <div className="py-12">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">Latest Updates</h2>
-              <button className="text-[#006400] hover:text-[#004d00] transition-colors rounded-2xl px-4 py-2">View All</button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.article
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white/5 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 group cursor-pointer"
               >
-                <div className="flex gap-6">
-                  <div className="w-1/3">
-                    <div className="aspect-square rounded-lg relative overflow-hidden">
-                      <img
-                        src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80"
-                        alt="Italian design studio"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
-                    </div>
+                <div className="p-6">
+                  <div className="w-16 h-16 bg-[#006400]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#006400]/20 transition-colors">
+                    <CurrencyDollarIcon className="w-8 h-8 text-[#006400]" />
                   </div>
-                  <div className="w-2/3">
-                    <span className="text-gray-800 text-sm font-medium">February 10, 2024</span>
-                    <h3 className="text-xl font-bold text-gray-900 mt-2 mb-4">New Italian Design Studio Opening</h3>
-                    <p className="text-gray-700">Auto Equity Group establishes new design studio in Milan, focusing on innovative automotive solutions.</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Financing</h3>
+                  <p className="text-gray-600 text-sm mb-4">Get pre-approved and find the best financing options for your next vehicle.</p>
+                  <div className="flex items-center text-[#006400] text-sm font-medium group-hover:gap-2 transition-all">
+                    <span>Learn More</span>
+                    <ArrowRightIcon className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </div>
-              </motion.article>
+              </motion.div>
 
-              <motion.article
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 group cursor-pointer"
+              >
+                <div className="p-6">
+                  <div className="w-16 h-16 bg-[#006400]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#006400]/20 transition-colors">
+                    <ArrowPathIcon className="w-8 h-8 text-[#006400]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Selling Your Car</h3>
+                  <p className="text-gray-600 text-sm mb-4">Get an instant offer and sell your car quickly with our streamlined process.</p>
+                  <div className="flex items-center text-[#006400] text-sm font-medium group-hover:gap-2 transition-all">
+                    <span>Get Started</span>
+                    <ArrowRightIcon className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-white/5 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 group cursor-pointer"
               >
-                <div className="flex gap-6">
-                  <div className="w-1/3">
-                    <div className="aspect-square rounded-lg relative overflow-hidden">
-                      <img
-                        src="https://images.unsplash.com/photo-1494905998402-395d579af36f?auto=format&fit=crop&q=80"
-                        alt="Diagnostic tools"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
-                    </div>
+                <div className="p-6">
+                  <div className="w-16 h-16 bg-[#006400]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#006400]/20 transition-colors">
+                    <DocumentTextIcon className="w-8 h-8 text-[#006400]" />
                   </div>
-                  <div className="w-2/3">
-                    <span className="text-gray-800 text-sm font-medium">February 5, 2024</span>
-                    <h3 className="text-xl font-bold text-gray-900 mt-2 mb-4">Advanced Diagnostic Tools Launch</h3>
-                    <p className="text-gray-700">Introducing our new line of advanced diagnostic tools, developed in collaboration with Italian engineering experts.</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Documents</h3>
+                  <p className="text-gray-600 text-sm mb-4">Access and manage all your vehicle documents in one secure place.</p>
+                  <div className="flex items-center text-[#006400] text-sm font-medium group-hover:gap-2 transition-all">
+                    <span>View Documents</span>
+                    <ArrowRightIcon className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </div>
-              </motion.article>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 group cursor-pointer"
+              >
+                <div className="p-6">
+                  <div className="w-16 h-16 bg-[#006400]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#006400]/20 transition-colors">
+                    <WrenchIcon className="w-8 h-8 text-[#006400]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Car Parts</h3>
+                  <p className="text-gray-600 text-sm mb-4">Find genuine parts and accessories for your vehicle with rebates and discounts.</p>
+                  <div className="flex items-center text-[#006400] text-sm font-medium group-hover:gap-2 transition-all">
+                    <span>Shop Parts</span>
+                    <ArrowRightIcon className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
 
