@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next'
 import { Playfair_Display, Montserrat } from 'next/font/google'
 import './globals.css'
+import AuthProviderWrapper from '../components/AuthProviderWrapper'
 
 const playfair = Playfair_Display({ 
   subsets: ['latin'],
@@ -25,7 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${montserrat.variable} font-montserrat bg-[#F8F7F4]`}>{children}</body>
+      <body className={`${playfair.variable} ${montserrat.variable} font-montserrat bg-[#F8F7F4]`}>
+        <AuthProviderWrapper>{children}</AuthProviderWrapper>
+      </body>
     </html>
   )
 } 
